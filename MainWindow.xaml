@@ -1,0 +1,73 @@
+﻿<Window x:Class="StickyNotes.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StickyNotes"
+        mc:Ignorable="d"
+        Title="Sticky notes"
+        Height="450"
+        Width="800"
+        Background="Beige"
+        FontSize="24"
+        d:DataContext="{d:DesignInstance local:StickyNotesViewModel}"
+        HorizontalAlignment="Stretch">
+
+    <Grid HorizontalAlignment="Stretch"
+          Width="auto"
+          Height="auto">
+        <TextBox Margin="200,0,200,365"
+                 Text="Sticky Notes"
+                 Background="Beige"
+                 FontWeight="Bold"
+                 TextAlignment="Center"
+                 FontSize="32"
+                 BorderBrush="Beige" >
+        </TextBox>
+
+        <ItemsControl BorderThickness="1"
+                      HorizontalAlignment="Stretch"
+                      Height="auto"
+                      Width="auto">
+            <Button Height="57"
+                    Margin="744,0,-2,0"
+                    RenderTransformOrigin="-0.325,1.248"
+                    Command="{Binding OnAddNoteClick}"
+                    HorizontalAlignment="Stretch"
+                    Width="50">
+                <Image Source="add-icon-png-black-3.png" Height="47" Stretch="Fill"/>
+            </Button>
+            <Button Height="57"
+                    Margin="744,0,-2,0"
+                    Command="{Binding OnSaveClick}"
+                    Width="50"
+                    HorizontalAlignment="Stretch">
+                <Image Source="Properties/save.png"
+                       Stretch="UniformToFill"></Image>
+            </Button>
+            <StackPanel Height="282">
+
+                <ListBox x:Name="Notes"
+                             ItemsSource="{Binding Notes}"
+                             Height="277"
+                             SelectionChanged="Notes_SelectionChanged"
+                             Width="707"
+                             HorizontalAlignment="Stretch">
+                    <ListBox.Resources>
+                        <DataTemplate DataType="{x:Type local:Note}">
+                            <StackPanel ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                                <TextBox Text="{Binding Content}"
+                                             Margin="10"
+                                             TextWrapping="Wrap"/>
+                                <Button Content="remove"
+                                            Margin="400,5,5,5"
+                                            Command="{Binding OnRemoveNoteClick}" 
+                                 />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.Resources>
+                </ListBox>
+            </StackPanel>
+        </ItemsControl>
+    </Grid>
+</Window>
